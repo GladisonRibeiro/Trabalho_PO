@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 
 import dados.Item;
 import estruturas.ListaContig;
-import estruturas.ListaDupla;
 
 public class OrdenaPesquisa {
 
@@ -33,11 +32,11 @@ public class OrdenaPesquisa {
 	private void fazTudo(){
 		tempoInicial = System.nanoTime();
 		
-		for (int i = 0; i < NOME_ARQUIVO.length; i++) {
-			itens = new ListaContig(this.NOME_ARQUIVO[i]); //cria a lista do tamanho desejado
+		for (int i = 0; i < OrdenaPesquisa.NOME_ARQUIVO.length; i++) {
+			itens = new ListaContig(OrdenaPesquisa.NOME_ARQUIVO[i]); //cria a lista do tamanho desejado
 			for (int j = 0; j < TIPO_ARQUIVO.length; j++) {
-				lerArquivo(NOME_ARQUIVO[i], TIPO_ARQUIVO[j]);
-				gravarArquivo(itens.quicksort(), NOME_ARQUIVO[i], TIPO_ARQUIVO[j]);
+				lerArquivo(OrdenaPesquisa.NOME_ARQUIVO[i], OrdenaPesquisa.TIPO_ARQUIVO[j]);
+				gravarArquivo(itens.quicksort(), OrdenaPesquisa.NOME_ARQUIVO[i], OrdenaPesquisa.TIPO_ARQUIVO[j]);
 				itens.zeraLista();
 			}
 		}

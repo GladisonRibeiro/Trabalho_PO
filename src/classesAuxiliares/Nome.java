@@ -34,6 +34,7 @@ public class Nome {
 		String[] tokens = nome.split(regex);
 		this.primeiroNome = tokens[0];   
 		for (int i = 1; i < tokens.length; i++) {
+			if(tokens[i] != null)
 			this.sobrenome += tokens[i]+ " ";
 		}
 	}
