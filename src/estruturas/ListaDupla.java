@@ -158,17 +158,14 @@ public class ListaDupla {
 		pivo = vetor[(i + j) / 2].getInfo().getChave();
 		do {
 
-			while ( (vetor[i].getInfo().getChave() < pivo) )// && (i < vetor.length) && (i > -1)
+			while ( (vetor[i].getInfo().getChave() < pivo) && (i < vetor.length) && (i > -1) )// 
 				i++;
 
-			while ( (vetor[j].getInfo().getChave() > pivo) )// && (j < vetor.length) && (j > -1)
+			while ( (vetor[j].getInfo().getChave() > pivo) && (j < vetor.length) && (j > -1) )// 
 				j--;
 
 			if (i <= j) {
 				trocaNosDupla(vetor[i], vetor[j]);
-				// temp = this.vetor[i];
-				// this.vetor[i] = this.vetor[j];
-				// this.vetor[j] = temp;
 				i++;
 				j--;
 			}
