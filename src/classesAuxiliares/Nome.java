@@ -1,61 +1,61 @@
 package classesAuxiliares;
 
 public class Nome {
-	
-	private String primeiroNome, sobrenome;
-	private String regex = " ";
-	
-	
-	public String getPrimeiroNome() {
-		return primeiroNome;
+
+	private String nome;
+	private Long valor = 0L;
+
+	public String getNome() {
+		return nome;
 	}
 
-	public void setPrimeiroNome(String primeiroNome) {
-		this.primeiroNome = primeiroNome;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public String getSobrenome() {
-		return sobrenome;
+	public Long getValor() {
+		return valor;
 	}
 
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
-	}
-
-	public String getRegex() {
-		return regex;
-	}
-
-	public void setRegex(String regex) {
-		this.regex = regex;
+	public void setValor(Long valor) {
+		this.valor = valor;
 	}
 
 	public Nome(String nome) {
-		String[] tokens = nome.split(regex);
-		this.primeiroNome = tokens[0];   
-		for (int i = 1; i < tokens.length; i++) {
-			if(tokens[i] != null)
-			this.sobrenome += tokens[i]+ " ";
-		}
+		this.nome = nome;
+		defineValor(nome);
 	}
-	
-	//compara a primeira letra do nome e a do sobrenome 
-	//retorna true se a letra for menor que a do nome passado 
-	public boolean campareNome(Nome nome){
-		char pthis = this.primeiroNome.toLowerCase().charAt(0);
-		char pnome = nome.getPrimeiroNome().toLowerCase().charAt(0);
-		char sthis = this.sobrenome.toLowerCase().charAt(0);
-		char snome = nome.getSobrenome().toLowerCase().charAt(0);
-		
-		if(pthis == pnome){
-			if(sthis >= snome)
-				return true;
-		}
-		else if(pthis >= pnome){
+
+	// retorna true se o valor do nome for igual ao do nome comparado
+	public boolean igualNome(Nome nome){
+		if(this.valor.equals(nome.getValor()) )
 			return true;
-		}
-		
+		else
+			return false;
+	}
+	// retorna true se o valor do nome for menor ao do nome comparado
+	public boolean menorNome(Nome nome){
+		if(this.valor < nome.getValor() )
+			return true;
 		return false;
 	}
+
+	//Método criado com base no conceito da Professora
+	//para definir um valor para comparação
+	private void defineValor(String nome) {
+		char[] c = nome.toCharArray();
+		System.out.print("\nc.length = "+c.length);
+		for (int i = 0; i < c.length; i++) {
+			int aux = (int)(Character.valueOf(c[i]) * Math.pow(3, i));
+			this.valor += aux;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "nome=" + nome + ", valor=" + valor;
+	}
+	
+	
 
 }

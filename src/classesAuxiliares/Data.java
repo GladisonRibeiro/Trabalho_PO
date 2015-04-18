@@ -1,69 +1,53 @@
+/*
+ * Codigo da web:
+ * Calendar c = Calendar.getInstance();
+		Date data = c.getTime();//pega data atual
+		DateFormat f = DateFormat.getDateInstance();
+		Date data2;
+		try {
+			data2 = f.parse("12/01/1995");
+			System.out.println(data2);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		System.out.println("Data formatada: " + sdf.format(data));
+ */
 package classesAuxiliares;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 
 public class Data {
 
-	private int dia, mes, ano;
-	private String regex = "/";
-	
-	public int getDia() {
-		return dia;
+	private Date data;
+
+	public Date getData() {
+		return data;
 	}
 
-	public void setDia(int dia) {
-		this.dia = dia;
+	public void setData(Date data) {
+		this.data = data;
 	}
 
-	public int getMes() {
-		return mes;
-	}
-
-	public void setMes(int mes) {
-		this.mes = mes;
-	}
-
-	public int getAno() {
-		return ano;
-	}
-
-	public void setAno(int ano) {
-		this.ano = ano;
-	}
-
-	public String getRegex() {
-		return regex;
-	}
-
-	public void setRegex(String regex) {
-		this.regex = regex;
-	}
-
-	
 	public Data(String data) {
-		String[] tokens = data.split(regex);
-		this.dia = Integer.parseInt(tokens[0]);
-		this.mes = Integer.parseInt(tokens[1]);
-		this.ano = Integer.parseInt(tokens[2]);				
+		// tentar transformar String em data
+		DateFormat f = DateFormat.getDateInstance();
+		try {
+			this.data = f.parse(data);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
-	//retorna true se mais atual que a data passada
-	public boolean compareData(Data data2){
-		
-		if(this.ano == data2.getAno() ){
-			if(this.mes == data2.getMes()){	
-				if(this.dia >= data2.getDia()){
-					return true;
-				}
-			}
-			else if(this.mes > data2.getMes()){
-				return true;
-			}
-		}
-		else if(this.ano > data2.getAno()){
+	public boolean éIgual(Data data){
+		if (this.data.equals(data.getData()) && !(this.data.compareTo(data.getData()) > 0 || this.data.compareTo(data.getData()) < 0))
 			return true;
-		}
-		
-		return false;
+		else
+			return false;
 	}
 
 }
