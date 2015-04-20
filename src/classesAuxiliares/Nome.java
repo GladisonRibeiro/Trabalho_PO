@@ -27,24 +27,24 @@ public class Nome {
 	}
 
 	// retorna true se o valor do nome for igual ao do nome comparado
-	public boolean igualNome(Nome nome){
+	public boolean ÈIgual(Nome nome){
 		if(this.valor.equals(nome.getValor()) )
 			return true;
 		else
 			return false;
 	}
 	// retorna true se o valor do nome for menor ao do nome comparado
-	public boolean menorNome(Nome nome){
+	public boolean ÈMenor(Nome nome){
 		if(this.valor < nome.getValor() )
 			return true;
-		return false;
+		else
+			return false;
 	}
 
 	//MÈtodo criado com base no conceito da Professora
 	//para definir um valor para comparaÁ„o
 	private void defineValor(String nome) {
 		char[] c = nome.toCharArray();
-		System.out.print("\nc.length = "+c.length);
 		for (int i = 0; i < c.length; i++) {
 			int aux = (int)(Character.valueOf(c[i]) * Math.pow(3, i));
 			this.valor += aux;

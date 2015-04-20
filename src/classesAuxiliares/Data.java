@@ -32,7 +32,7 @@ public class Data {
 		this.data = data;
 	}
 
-	public Data(String data) {
+	public void setData(String data) {
 		// tentar transformar String em data
 		DateFormat f = DateFormat.getDateInstance();
 		try {
@@ -41,6 +41,15 @@ public class Data {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+	
+	public Data(){
+		super();
+	}
+
+	public Data(String data) {
+		super();
+		this.setData(data);
 	}
 	
 	public boolean ÈIgual(Data data){

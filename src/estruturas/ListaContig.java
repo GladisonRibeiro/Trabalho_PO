@@ -165,6 +165,42 @@ public class ListaContig {
 			ordena(i, dir);
 	}
 	// / fim do algoritmo da professora
+	
+	
+	// Inicio do meu codigo//
+	//Pricipio ordem por nome ???????
+	public Item[] quicksortRegistro() {
+		ordenaRegistro(0, fim - 1);
+		return info;
+	}
+	
+	private void ordenaRegistro(int esq, int dir) {
+		int pivo, i = esq, j = dir;
+		Item temp;
+		pivo = info[(i + j) / 2].getChave();
+		do {
+			
+			while ((info[i].getChave() < pivo) && (i < info.length) && (i > -1))
+				i++;
+			
+			while ((info[j].getChave() > pivo) && (j < info.length) && (j > -1))
+				j--;
+			
+			if (i <= j) {
+				temp = this.info[i];
+				this.info[i] = this.info[j];
+				this.info[j] = temp;
+				i++;
+				j--;
+			}
+			
+		} while (i <= j);
+		if (esq < j)
+			ordena(esq, j);
+		if (dir > i)
+			ordena(i, dir);
+	}
+	// / fim do meu código
 
 }// fim bloco principal
 

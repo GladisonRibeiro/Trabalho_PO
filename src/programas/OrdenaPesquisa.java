@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import dados.Item;
+import dados.Registro;
 import estruturas.ListaContig;
 
 /**
@@ -28,8 +29,8 @@ public class OrdenaPesquisa {
 	 * Variaveis(Arrays) para controle do nome dos arquivos, que e composto por um numero(tamanho) e 
 	 * 	tipo de ordenação que ele possui.
 	 */
-	private static  final Integer[] NOME_ARQUIVO = {20};
-	private static final String[] TIPO_ARQUIVO = {"OrdAsc", "OrdDesc", "DesOrd"};
+	private static  final Integer[] NOME_ARQUIVO = {500, 1000, 5000, 10000, 50000};
+	private static final String[] TIPO_ARQUIVO = {"alea", "inv", "ord"};
 	private static final String ORDERNADO = "Ordenado";
 	
 	//variaveis para a contagem de tempo
@@ -100,7 +101,7 @@ public class OrdenaPesquisa {
 	}
 	public void lerArquivo(Integer nome, String tipo, String ordenado){
 		 
-		String caminhoArquivo = "src/arquivos/"+nome+tipo+ordenado+".txt";//camminnho relativo
+		String caminhoArquivo = "src/arquivos_de_teste/cliente"+nome+tipo+ordenado+".txt";//camminnho relativo
 		path = Paths.get(caminhoArquivo); // cria o caminho absoluto baseado no relativo( acho que e isso)
 		
 		try(BufferedReader reader = Files.newBufferedReader(path, cs)){
@@ -108,7 +109,13 @@ public class OrdenaPesquisa {
 			while((line = reader.readLine()) != null){
 				String[] tokens = line.split(";");
 				for (int i = 0; i < tokens.length; i++) {
-					boolean flag = itens.inserirUltimo(new Item(Integer.parseInt(tokens[i].replaceAll(" ", ""))));
+					String cpf = tokens[0];
+					String name = tokens[1];
+					String data = tokens[2];
+					String valor = tokens[3];
+					
+					
+					boolean flag = itens.inserirUltimo(new Registro(cpf,name,data,valor));
 					//inicio Debug da flag.
 					if(!flag){
 						System.err.println("erro na flag inserirUltimo");
@@ -134,12 +141,12 @@ public class OrdenaPesquisa {
 	 * então este método de gravar pode ser usado para gravar todos os seus resultados!
 	 */
 	public void gravarArquivo(Item[] items, Integer nome, String tipo){
-		String caminhoArquivo = "src/arquivos/"+nome+tipo+OrdenaPesquisa.ORDERNADO+".txt";
+		String caminhoArquivo = "src/arquivos_gravados/cliente"+nome+tipo+OrdenaPesquisa.ORDERNADO+".txt";
 		path = Paths.get(caminhoArquivo);
 		try(BufferedWriter w = Files.newBufferedWriter(path, cs)) { /* recebe o path e a codificação*/
 			for (int i = 0; i < items.length; i++) {
 				if(i == items.length-1){
-					w.write(items[i].getChave()+"");					
+					w.write(items[i].toString()+"\n");					
 				}else{
 					w.write(items[i].getChave()+"; ");// guarda na memoria os caracteres para serem escritos no arquivo.
 				}
