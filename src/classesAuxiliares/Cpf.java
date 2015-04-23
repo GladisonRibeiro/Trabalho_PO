@@ -28,4 +28,18 @@ public class Cpf {
 		else
 			return false;
 	}
+	
+	public boolean ÈMenor(Cpf cpf) {
+		if(this.cpf < cpf.getCpf())
+			return true;
+		else
+			return false;
+	}
+
+	public boolean ÈMaior(Cpf cpf) {
+		if(this.cpf > cpf.getCpf())
+			return true;
+		else
+			return false;
+	}
 }

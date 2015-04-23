@@ -29,8 +29,8 @@ public class OrdenaPesquisa {
 	 * Variaveis(Arrays) para controle do nome dos arquivos, que e composto por um numero(tamanho) e 
 	 * 	tipo de ordenação que ele possui.
 	 */
-	private static  final Integer[] NOME_ARQUIVO = {500, 1000, 5000, 10000, 50000};
-	private static final String[] TIPO_ARQUIVO = {"alea", "inv", "ord"};
+	public static  final Integer[] NOME_ARQUIVO = {500, 1000, 5000, 10000, 50000};
+	public static final String[] TIPO_ARQUIVO = {"alea", "inv", "ord"};
 	private static final String ORDERNADO = "Ordenado";
 	
 	//variaveis para a contagem de tempo
@@ -39,7 +39,7 @@ public class OrdenaPesquisa {
 
 	
 	Path path; //Classe que referência o caminho do arquivo
-	Charset cs = StandardCharsets.UTF_8; // codificação do arquivo para que não aja erro na hora de ler ( define o tipo de linguagem que o arquivo está)
+	Charset cs = StandardCharsets.US_ASCII; // codificação do arquivo para que não aja erro na hora de ler ( define o tipo de linguagem que o arquivo está)
 	ListaContig itens; //Estrutura de dados para ser preechida com os registros para efetuar a busca e a pesquisa
 	
 	public OrdenaPesquisa() {
@@ -54,7 +54,7 @@ public class OrdenaPesquisa {
 		tempoInicial = System.nanoTime();
 		leOrdenaQuickGrava();
 		System.out.println("\nentre os métodos lerOrdenaquickGrava e lerOrdenadosQuick\n");
-		lerOrdenadosQuick();
+//		lerOrdenadosQuick();
 		tempoFinal = System.nanoTime();
 		System.out.println("\n\tTempo decorido : "+(tempoFinal - tempoInicial) + " nano-Segundos");
 	}
@@ -75,7 +75,7 @@ public class OrdenaPesquisa {
 			itens = new ListaContig(OrdenaPesquisa.NOME_ARQUIVO[i]); //cria a lista do tamanho desejado
 			for (int j = 0; j < TIPO_ARQUIVO.length; j++) {
 				lerArquivo(OrdenaPesquisa.NOME_ARQUIVO[i], OrdenaPesquisa.TIPO_ARQUIVO[j]); // 1
-				gravarArquivo(itens.quicksort(), OrdenaPesquisa.NOME_ARQUIVO[i], OrdenaPesquisa.TIPO_ARQUIVO[j]); //2
+				gravarArquivo(itens.quicksortRegistro(), OrdenaPesquisa.NOME_ARQUIVO[i], OrdenaPesquisa.TIPO_ARQUIVO[j]); //2
 				itens.zeraLista(); //3
 			}
 		}
@@ -107,31 +107,36 @@ public class OrdenaPesquisa {
 		try(BufferedReader reader = Files.newBufferedReader(path, cs)){
 			String line = null;
 			while((line = reader.readLine()) != null){
-				String[] tokens = line.split(";");
-				for (int i = 0; i < tokens.length; i++) {
-					String cpf = tokens[0];
-					String name = tokens[1];
-					String data = tokens[2];
-					String valor = tokens[3];
-					
-					
-					boolean flag = itens.inserirUltimo(new Registro(cpf,name,data,valor));
-					//inicio Debug da flag.
-					if(!flag){
-						System.err.println("erro na flag inserirUltimo");
-						flag = !flag;
-					}
-					else{
-						System.out.print(tokens[i] + " | ");
-					//fim Debug da flag.
-					}
+				try {
+					String[] tokens = line.split(";");
+//					for (int i = 0; i < tokens.length; i++) {
+						String cpf = tokens[0];
+						String name = tokens[1];
+						String data = tokens[2];
+						String valor = tokens[3];
+						
+						
+						boolean flag = itens.inserirUltimo(new Registro(cpf,name,data,valor));
+						//inicio Debug da flag.
+						if(!flag){
+							System.err.println("erro na flag inserirUltimo");
+							flag = !flag;
+						}
+						else{
+//							System.out.print(tokens[i] + " | ");
+							//fim Debug da flag.
+						}
+//					}
+				} catch (Exception e) {
+					System.out.println("Erro no tokens");
 				}
+				
 			}
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 		
-		System.out.println("\nok lerArquivo -> "+nome+tipo+ordenado+".txt"); //Debug.
+		System.out.println("\nok lerArquivo -> "+caminhoArquivo); //Debug.
 	}
 
 	/*
@@ -145,11 +150,11 @@ public class OrdenaPesquisa {
 		path = Paths.get(caminhoArquivo);
 		try(BufferedWriter w = Files.newBufferedWriter(path, cs)) { /* recebe o path e a codificação*/
 			for (int i = 0; i < items.length; i++) {
-				if(i == items.length-1){
+//				if(i == items.length-1){
 					w.write(items[i].toString()+"\n");					
-				}else{
-					w.write(items[i].getChave()+"; ");// guarda na memoria os caracteres para serem escritos no arquivo.
-				}
+//				}else{
+//					w.write(items[i].getChave()+"; ");// guarda na memoria os caracteres para serem escritos no arquivo.
+//				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

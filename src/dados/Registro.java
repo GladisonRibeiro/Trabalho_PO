@@ -1,37 +1,60 @@
 package dados;
 
-import classesAuxiliares.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Registro extends Item {
 	// Os registros serão compostos dos campos CPF e nome do cliente, data e
 	// valor de sua compra
-	private Cpf cpf;
-	private Nome nome;
-	private Data data;
+	private Long cpf;
+	private String nome;
+	private Date data;
 	private Double valor;
 
-	public Cpf getCpf() {
+	
+	public Long getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Cpf cpf) {
+	public void setCpf(Long cpf) {
 		this.cpf = cpf;
 	}
 
-	public Nome getNome() {
+	public void setCpf(String cpf) {
+		this.cpf = Long.parseLong(cpf);
+	}
+	
+	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(Nome nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public Data getData() {
+	public Date getData() {
 		return data;
 	}
+	public String getDataString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(this.data);
+	}
 
-	public void setData(Data data) {
+	public void setData(Date data) {
 		this.data = data;
+	}
+	
+	public void setData(String data) {
+		// tentar transformar String em data
+		DateFormat f = DateFormat.getDateInstance();
+		try {
+			this.data = f.parse(data);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public Double getValor() {
@@ -52,9 +75,9 @@ public class Registro extends Item {
 
 	public Registro(String cpf, String nome, String data, String valor) {
 		super();
-		this.cpf = new Cpf(cpf);
-		this.nome = new Nome(nome);
-		this.data = new Data(data);
+		this.setCpf(cpf);
+		this.nome = nome;
+		this.setData(data);
 		this.setValor(valor);
 	}
 
@@ -64,10 +87,10 @@ public class Registro extends Item {
 	
 	@Override
 	public String toString() {
-		return "Nome = "+this.nome + 
-				"; Cpf = "+ this.cpf+
-				"; Data = "+ this.data +
-				"; Valor = "+ this.valor;
+		return this.cpf+" ; "+ 
+				this.nome+" ; "+
+				this.getDataString() +" ; "+
+				this.valor;
 	}
 
 }

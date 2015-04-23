@@ -4,11 +4,12 @@ import dados.*;
 
 public class ListaContig {
 	private int fim;
-	private Item[] info; // o tipo Item está declarado no capítulo 1
+//	private Item[] info;
+	private Registro[] info; 
 
 	public ListaContig(int qte) {
 		this.fim = 0;
-		this.info = new Item[qte];
+		this.info = new Registro[qte];
 	}
 
 	public Item getInfo(int i) {
@@ -16,7 +17,7 @@ public class ListaContig {
 	}
 
 	public void setInfo(int i, Item elem) {
-		this.info[i] = elem;
+		this.info[i] = (Registro)elem;
 	}
 
 	public int getFim() {
@@ -39,7 +40,7 @@ public class ListaContig {
 		if (éCheia()) {
 			return false;
 		} else {
-			this.info[this.fim] = elem;
+			this.info[this.fim] = (Registro)elem;
 			this.fim++;
 			return true;
 		}
@@ -123,14 +124,10 @@ public class ListaContig {
 			}
 		}
 	}
-
-	// Inicio Gambiarra
 	
 	public void zeraLista(){
 		this.fim = 0;
 	}
-
-	// Fim da Gambiarra
 
 	// Inicio codigo da professora//
 	public Item[] quicksort() {
@@ -153,7 +150,7 @@ public class ListaContig {
 			if (i <= j) {
 				temp = this.info[i];
 				this.info[i] = this.info[j];
-				this.info[j] = temp;
+				this.info[j] = (Registro)temp;
 				i++;
 				j--;
 			}
@@ -168,32 +165,29 @@ public class ListaContig {
 	
 	
 	// Inicio do meu codigo//
-	//Pricipio ordem por nome ???????
+	//Principio ordem por cpf ???????
 	public Item[] quicksortRegistro() {
 		ordenaRegistro(0, fim - 1);
 		return info;
 	}
 	
 	private void ordenaRegistro(int esq, int dir) {
-		int pivo, i = esq, j = dir;
-		Item temp;
-		pivo = info[(i + j) / 2].getChave();
+		int i = esq, j = dir;
+		Registro pivo;
+		Registro temp;
+		pivo = info[(i + j) / 2];
 		do {
-			
-			while ((info[i].getChave() < pivo) && (i < info.length) && (i > -1))
-				i++;
-			
-			while ((info[j].getChave() > pivo) && (j < info.length) && (j > -1))
+			while ( info[i].getCpf() < pivo.getCpf() && i < (this.info.length - 1)  )//
+				i++;		
+			while ( info[j].getCpf() > pivo.getCpf()  && j > 0)//
 				j--;
-			
 			if (i <= j) {
-				temp = this.info[i];
+				temp = (Registro)this.info[i];
 				this.info[i] = this.info[j];
 				this.info[j] = temp;
 				i++;
 				j--;
 			}
-			
 		} while (i <= j);
 		if (esq < j)
 			ordena(esq, j);

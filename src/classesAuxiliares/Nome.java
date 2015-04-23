@@ -40,12 +40,21 @@ public class Nome {
 		else
 			return false;
 	}
+	// retorna true se o valor do nome for maior ao do nome comparado
+	public boolean éMaior(Nome nome){
+		if(this.valor > nome.getValor() )
+			return true;
+		else
+			return false;
+	}
 
 	//Método criado com base no conceito da Professora
 	//para definir um valor para comparação
 	private void defineValor(String nome) {
 		char[] c = nome.toCharArray();
-		for (int i = 0; i < c.length; i++) {
+		//definir um valor statico para a quantidade de caracteres a ser olhada ser a mesma
+		//substituir o c.length por 6.
+		for (int i = 0; i < 6; i++) {
 			int aux = (int)(Character.valueOf(c[i]) * Math.pow(3, i));
 			this.valor += aux;
 		}

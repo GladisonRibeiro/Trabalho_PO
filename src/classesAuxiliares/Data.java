@@ -18,6 +18,7 @@ package classesAuxiliares;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Data {
@@ -57,6 +58,12 @@ public class Data {
 			return true;
 		else
 			return false;
+	}
+	
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(data);
 	}
 
 }
