@@ -1,11 +1,12 @@
 package estruturas;
 
-import dados.*;
+import dados.Item;
+import dados.Registro;
 
 public class ListaContig {
 	private int fim;
-//	private Item[] info;
-	private Registro[] info; 
+	// private Item[] info;
+	private Registro[] info;
 
 	public ListaContig(int qte) {
 		this.fim = 0;
@@ -17,7 +18,7 @@ public class ListaContig {
 	}
 
 	public void setInfo(int i, Item elem) {
-		this.info[i] = (Registro)elem;
+		this.info[i] = (Registro) elem;
 	}
 
 	public int getFim() {
@@ -40,7 +41,7 @@ public class ListaContig {
 		if (éCheia()) {
 			return false;
 		} else {
-			this.info[this.fim] = (Registro)elem;
+			this.info[this.fim] = (Registro) elem;
 			this.fim++;
 			return true;
 		}
@@ -75,32 +76,19 @@ public class ListaContig {
 		String msg = "";
 		int i;
 		for (i = 0; i < this.fim; i++) {
-			msg += this.info[i].getChave() + "\n";
+			msg += this.info[i].toString() + "\n";
+		}
+		return msg;
+	}
+	public String[] toArrayString() {
+		String[] msg = new String[this.fim];
+		int i;
+		for (i = 0; i < this.fim; i++) {
+			msg[i] = this.info[i].toString();
 		}
 		return msg;
 	}
 
-	// exercício 01 nº10
-	public ListaContig removerMaior100() {
-		if (this.éVazia()) {
-			return null;
-		} else {
-			int i = 0;
-			ListaContig nova = new ListaContig(this.fim);
-			while (i < this.fim) {
-				if (this.info[i].getChave() > 100) {
-					nova.inserirUltimo(this.info[i]);
-					for (int j = i; j < this.fim - 1; j++) {
-						this.info[j] = this.info[j + 1];
-					}
-					this.fim--;
-				} else {
-					i++;
-				}
-			}
-			return nova;
-		}
-	}
 
 	// exercício 01 nº10
 	public void eliminarRepetidos(int x) {
@@ -124,12 +112,12 @@ public class ListaContig {
 			}
 		}
 	}
-	
-	public void zeraLista(){
+
+	public void zeraLista() {
 		this.fim = 0;
 	}
 
-	// Inicio codigo da professora//
+	// Inicio codigo da professora utilizando chave//
 	public Item[] quicksort() {
 		ordena(0, fim - 1);
 		return info;
@@ -150,7 +138,7 @@ public class ListaContig {
 			if (i <= j) {
 				temp = this.info[i];
 				this.info[i] = this.info[j];
-				this.info[j] = (Registro)temp;
+				this.info[j] = (Registro) temp;
 				i++;
 				j--;
 			}
@@ -161,40 +149,103 @@ public class ListaContig {
 		if (dir > i)
 			ordena(i, dir);
 	}
+
 	// / fim do algoritmo da professora
-	
-	
-	// Inicio do meu codigo//
-	//Principio ordem por cpf ???????
-	public Item[] quicksortRegistro() {
+
+	// Inicio do meu codigo utilizando cpf//
+	public void quicksortRegistro() {
 		ordenaRegistro(0, fim - 1);
-		return info;
 	}
-	
+
 	private void ordenaRegistro(int esq, int dir) {
 		int i = esq, j = dir;
 		Registro pivo;
 		Registro temp;
 		pivo = info[(i + j) / 2];
 		do {
-			while ( info[i].getCpf() < pivo.getCpf() && i < (this.info.length - 1)  )//
-				i++;		
-			while ( info[j].getCpf() > pivo.getCpf()  && j > 0)//
+			while (info[i].getCpf() < pivo.getCpf())
+				//
+				i++;
+
+			while (info[j].getCpf() > pivo.getCpf())
+				//
 				j--;
+
 			if (i <= j) {
-				temp = (Registro)this.info[i];
+				temp = this.info[i];
 				this.info[i] = this.info[j];
 				this.info[j] = temp;
 				i++;
 				j--;
 			}
 		} while (i <= j);
-		if (esq < j)
-			ordena(esq, j);
-		if (dir > i)
-			ordena(i, dir);
+		if (esq < j) {
+			ordenaRegistro(esq, j);
+		}
+		if (dir > i) {
+			ordenaRegistro(i, dir);
+		}
 	}
+	
 	// / fim do meu código
 
-}// fim bloco principal
+	// /codigo Henrique + valor total de compras
+	public String pesquisaBinaria(long cpf){
+		
+		String vendas = "";
+		double valorTotal = 0;
+		
+		int i, meio, esq = 0, dir = this.fim-1;
+		
+		vendas += cpf;
+		
+		
+		while(esq <= dir){
+			
+			meio = (esq+dir)/2;
+			
+			if(cpf == this.info[meio].getCpf()){
+				vendas += "\n" + this.info[meio].toString();
+				valorTotal += this.info[meio].getValor();
+				
+				//Bloco adicionado		
+				i = 1;
+				//Anda para a esquerda no vetor a partir do "meio", para encontrar todas as ocorrencias da busca nesta direcao
+				while(meio != 0 && this.info[meio - i].getCpf() == cpf ){	
+					vendas += "\n" + this.info[meio-i].toString();
+					valorTotal += this.info[meio].getValor();
+					if(meio-i == 0){
+						break;
+					}
+					i++;
+				}
+				
+				i = 1;
+				//Anda para a direita no vetor a partir do "meio", para encontrar todas as ocorrencias da busca nesta direcao
+				while(meio != this.info.length-1 && this.info[meio + i].getCpf() == cpf ){
+					vendas += "\n" + this.info[meio+i].toString();
+					valorTotal += this.info[meio].getValor();
+					if(meio+i == this.info.length-1){
+						break;
+					}
+					i++;
+				}
+				
+				vendas +="\n\t\t Total de Compras = R$:"+valorTotal;
+				valorTotal = 0;
+				return vendas;
+				//Fim do Bloco adicionado
+				
+			}
+			else{
+				if(cpf < this.info[meio].getCpf())
+					dir = meio - 1;
+				else
+					esq = meio + 1;
+			}
+		}
+		
+		return null;
+	}
 
+}// fim bloco principal

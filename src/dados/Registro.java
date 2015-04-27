@@ -87,10 +87,17 @@ public class Registro extends Item {
 	
 	@Override
 	public String toString() {
-		return this.cpf+" ; "+ 
-				this.nome+" ; "+
-				this.getDataString() +" ; "+
-				this.valor;
+//		String aux = "";
+//		int auxCpf = String.valueOf(this.cpf).length();
+//		while(auxCpf < 11){
+//			aux += "0";
+//			auxCpf++;
+//		}
+		
+		return 	this.cpf+";"+ 
+				this.nome+";"+
+				this.getDataString() +";"+
+				+this.valor;
 	}
 
 }

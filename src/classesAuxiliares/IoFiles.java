@@ -31,14 +31,14 @@ public class IoFiles {
 		return result;
 	}
 
-	public static boolean gravarArquivo(Object[] obj, String caminho){
+	public static boolean gravarArquivo(String[] obj, String caminho){
 		
-		String caminhoArquivo = caminho;
 		Charset cs = Charset.defaultCharset();
-		Path path = Paths.get(caminhoArquivo);
+		Path path = Paths.get(caminho);
 		try(BufferedWriter w = Files.newBufferedWriter(path, cs)) { 
 			for (int i = 0; i < obj.length; i++) {
-				w.write(obj[i].toString()+"\n");					
+				if(obj[i] != null)
+				w.write(obj[i]+"\n");					
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
